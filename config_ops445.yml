@@ -1,0 +1,52 @@
+---
+- name: Configure VM for OPS445 Lab
+  hosts: rocky
+  user: student
+  become: yes
+  vars:
+    seneca_id: "cfederici"
+
+  tasks:
+    - name: Update Apache (httpd)
+      yum:
+        name: httpd
+        state: latest
+
+    - name: Install EPEL repository
+      yum:
+        name: epel-release
+        state: present
+
+    - name: Remove 'tree' package
+      yum:
+        name: tree
+        state: absent
+
+    - name: Set hostname to Seneca username
+      hostname:
+        name: "cfederici"
+
+    - name: Create a new user with sudo access
+      user:
+        name: "cfederici"
+        state: present
+        createhome: yes
+        groups: wheel
+        append: yes
+
+    - name: Set up SSH authorized keys for the new user
+      authorized_key:
+        user: "cfederici"
+        state: present
+        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+
+    - name: Create directory structure for labs
+      file:
+        path: "/home/cfederici/ops445/lab{{ item }}"
+        state: directory
+        owner: "cfederici"
+        group: "cfederici"
+        mode: '0755'
+      loop: "{{ range(1, 10) | list }}"
+
+

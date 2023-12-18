@@ -1,0 +1,38 @@
+[cfederici@mtrx-node05pd lab-9-cfederici]$ ansible-playbook -i hosts config_ops445.yml
+
+PLAY [Configure VM for OPS445 Lab] *************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************
+ok: [rocky]
+
+TASK [Update Apache (httpd)] *******************************************************************************************
+ok: [rocky]
+
+TASK [Install EPEL repository] *****************************************************************************************
+ok: [rocky]
+
+TASK [Remove 'tree' package] *******************************************************************************************
+ok: [rocky]
+
+TASK [Set hostname to Seneca username] *********************************************************************************
+changed: [rocky]
+
+TASK [Create a new user with sudo access] ******************************************************************************
+changed: [rocky]
+
+TASK [Set up SSH authorized keys for the new user] *********************************************************************
+changed: [rocky]
+
+TASK [Create directory structure for labs] *****************************************************************************
+changed: [rocky] => (item=1)
+changed: [rocky] => (item=2)
+changed: [rocky] => (item=3)
+changed: [rocky] => (item=4)
+changed: [rocky] => (item=5)
+changed: [rocky] => (item=6)
+changed: [rocky] => (item=7)
+changed: [rocky] => (item=8)
+changed: [rocky] => (item=9)
+
+PLAY RECAP *************************************************************************************************************
+rocky                      : ok=8    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
